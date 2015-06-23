@@ -25,3 +25,11 @@ echo "http.port: ${ELASTICSEARCH_PORT}" >> ${ELASTICSEARCH_DIR}/config/elasticse
 # Make sure to use the exact parameters you want for ElasticSearch and give it enough sleep time to properly start up
 nohup bash -c "${ELASTICSEARCH_DIR}/bin/elasticsearch 2>&1" &
 sleep "${ELASTICSEARCH_WAIT_TIME}"
+
+# Install ES plugins
+nohup bash -c "${ELASTICSEARCH_DIR}/bin/plugin --install com.github.richardwilly98.elasticsearch/elasticsearch-river-mongodb/2.0.9 2>&1" &
+nohup bash -c "${ELASTICSEARCH_DIR}/bin/plugin --install elasticsearch/elasticsearch-mapper-attachments/2.5.0 2>&1" &
+
+# Create the mapping
+wget https://raw.githubusercontent.com/soldotno/harvester-webservice/develop/es-mapping.json?token=AALEGKLG7W1LZxrLoV6eQ0TjbQeEpBgwks5VkpZvwA%3D%3D --output-document es-mapping.json
+curl -XPUT 'http://127.0.0.1:9200/_river/mongodb/_meta' -d @es-mapping.json
