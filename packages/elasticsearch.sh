@@ -30,6 +30,6 @@ sleep "${ELASTICSEARCH_WAIT_TIME}"
 nohup bash -c "${ELASTICSEARCH_DIR}/bin/plugin --install com.github.richardwilly98.elasticsearch/elasticsearch-river-mongodb/2.0.9 2>&1" &
 nohup bash -c "${ELASTICSEARCH_DIR}/bin/plugin --install elasticsearch/elasticsearch-mapper-attachments/2.5.0 2>&1" &
 
-# Create the mapping
-wget https://raw.githubusercontent.com/soldotno/harvester-webservice/develop/es-mapping.json?token=AALEGKLG7W1LZxrLoV6eQ0TjbQeEpBgwks5VkpZvwA%3D%3D --output-document es-mapping.json
+# Create the index and mapping
+curl -XPUT 'http://localhost:9200/harvester-test/'
 curl -XPUT 'http://127.0.0.1:9200/_river/mongodb/_meta' -d @es-mapping.json
