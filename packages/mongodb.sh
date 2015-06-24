@@ -21,6 +21,6 @@ wget --continue --output-document "${CACHED_DOWNLOAD}" "https://fastdl.mongodb.o
 tar -xaf "${CACHED_DOWNLOAD}" --strip-components=1 --directory "${MONGODB_DIR}"
 
 # Make sure to use the exact parameters you want for MongoDB and give it enough sleep time to properly start up
-nohup bash -c "LC_ALL=C ${MONGODB_DIR}/bin/mongod --port ${MONGODB_PORT} --dbpath ${MONGODB_DIR} 2>&1 --replSet rs0"  &
+nohup bash -c "LC_ALL=C ${MONGODB_DIR}/bin/mongod --port ${MONGODB_PORT} --dbpath ${MONGODB_DIR}  --replSet rs0  2>&1"  &
 sleep "${MONGODB_WAIT_TIME}"
 mongo < setup-mongo.js
